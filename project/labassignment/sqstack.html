@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>栈实验报告书</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+@page {
+  size: A4;
+  margin:22mm 18mm 22mm 18mm;
+}
+*{box-sizing:
+	border-box;
+	margin:0;
+	padding:0;}
+body{
+  font-family:"SimSun","宋体",serif;
+  font-size:10.5pt;
+  line-height:1.55;
+  width:210mm;
+  min-height:297mm;
+  margin:0 auto;
+  background:#ffffff;
+}
+.container{
+  width:100%;
+}
+.header-top{
+  text-align:center;
+  font-size:28pt;
+  margin-bottom:36pt;
+}
+h1.report-title{
+  text-align:center;
+  font-size:26pt;
+  font-family:'KaiTi';
+  font-weight:bold;
+  margin:14pt 0 18pt 0;
+}
+.header-info-table{
+  margin:0 0 20pt 0;
+  /* 信息项左对齐，实现冒号对齐效果 */
+  display:grid;
+  grid-template-columns: auto 1fr;
+  gap:8pt 8pt;
+  max-width:70mm;
+  margin-left:auto;
+  margin-right:auto;
+}
+.header-info-table .label{
+  text-align:right;
+}
+.header-info-table >div:nth-child(2n) {
+	border-bottom:0.5pt solid #000;
+	padding-bottom:2pt;
+}
+/* ================================= */
+
+h2{
+  font-size:11pt;
+  font-weight:bold;
+  margin:14pt 0 6pt 0;
+  text-align:left;
+}
+h3{
+  font-size:10.5pt;
+  font-weight:bold;
+  margin:11pt 0 4pt 0;
+}
+p{
+  margin:4pt 0;
+  text-indent:0em;
+}
+pre.code-box{
+  font-family:"Courier New",monospace;
+  font-size:8.2pt;
+  border:1px solid #777777;
+  padding:8pt 10pt;
+  background:#ffffff;
+  white-space:pre;
+  overflow-x:auto;
+  margin:7pt 0;
+}
+.math-center{
+  text-align:center;
+  margin:8pt 0;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:10pt 0;
+}
+table th, table td{
+  border:1px solid #000;
+  padding:5pt 7pt;
+  font-size:9pt;
+}
+table th{
+  background:#f8f8f8;
+}
+@media print{
+  body{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header-top">
+  <p style="font-size:36pt;font-family:'LiSu'">
+	 <br>
+  </p>
+  <p style="font-size:36pt;font-family:'LiSu'">河海大学 数学院</p>
+  </div>
+  <div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  </div>
+  <div class="header-top">
+  <p style="font-size:28pt;font-family:'KaiTi';font-weight:bold">《数据结构与算法》课程</p>
+  </div>
+</div>
+<h1 class="report-title">栈的实现与应用实验报告书</h1>
+  <p>
+	 <br>
+  </p>
+  <p>
+	 <br>
+  </p>
+  <p>
+	 <br>
+  </p>
+<div class="header-info-table">
+  <div class="label">专  业：</div>
+  <div>信息与计算科学</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+</div>
+<div class="header-info-table">	
+  <div class="label">姓  名：</div>
+  <div>邸常伟</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+</div>
+<div class="header-info-table">
+  <div class="label">学  号：</div>
+  <div>2426010214</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+    <p>
+	 <br>
+  </p>
+    <p>
+	 <br>
+  </p>
+    <p>
+	 <br>
+  </p>
+</div>
+<div style="text-align:center;font-size:18pt;margin-bottom:36pt;">
+    <p>二〇二六年 十月</p>
+    <span class="label"> </span>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+   <p>
+	 <br>
+  </p>
+   <p>
+	 <br>
+  </p>
+</div>
+<!-- ================================= -->
+
+<h2>栈实验报告</h2>
+
+<h2>实验目的</h2>
+<p>(1)掌握并实现栈数据结构的基本操作。</p>
+<p>(2)加深对栈的理解，逐步培养解决实际问题的编程能力。</p>
+<p>(3)基于栈解决实际问题（数制转换）。</p>
+
+<h2>实验内容</h2>
+<p>1､基于如下的顺序栈类型定义：
+
+typedef struct{
+
+    ElemType *base;
+
+    ElemType  *top;
+
+    int stacksize;
+
+}Stack;
+
+实现栈的基本操作函数：初始化栈InitStack、销毁栈DestroyStack、判断栈长度StackLength、清空栈ClearStack、取栈顶元素GetTop、入栈Push、出栈Pop、遍历输出栈元素StackPrintTravers基本操作。</p>
+<p>2､调用上述函数实现下列操作：</p>
+<p>(1)初始化栈；</p>
+<p>(2)调用多次入栈函数；</p>
+<p>(3)调用出栈函数；</p>
+<p>(4)遍历并输出栈；</p>
+<p>(5)输出栈顶元素；</p>
+<p>(6)销毁栈；</p>
+<p>3､基于栈基本操作，实现数制转换（十进制转为八进制）</p>
+
+<h2>1､ 基本操作实现函数代码:</h2>
+<p>头文件sqstack.h 编码如下:</p>
+<pre class="code-box">
+#include &lt;iostream&gt;
+using namespace std;
+#define maxsize 100
+#define maxstacksize 10
+#define elemtype int
+
+typedef struct {
+	elemtype* base;
+	elemtype* top;
+	int stacksize;
+}sqstack;
+
+void initstack(sqstack& S) {//初始化一个顺序栈
+	S.base = new elemtype[maxstacksize];
+	if (!S.base)return;
+	S.top = S.base;
+	S.stacksize = maxstacksize;
+}
+
+void gettop(sqstack S,elemtype& e) {//取栈顶元素，用e返回
+	if (S.base == S.top)return;
+	e = *(S.top - 1);
+}
+
+void push(sqstack& S, elemtype e) {//将元素e放入栈顶
+	if (S.top - S.base >= S.stacksize) {
+		int newsize = S.stacksize + maxstacksize;
+		elemtype* a = new elemtype[newsize];
+		int len = S.top - S.base;
+		for (int i = 0; i < len; i++) a[i] = S.base[i];
+		delete[]S.base;
+		S.base = a; S.top =S.base+len;
+		S.stacksize=newsize;
+	}
+	*S.top++ = e;
+}
+
+void pop(sqstack& S, elemtype& e) {//删除栈顶元素，并用e返回
+	if (S.base == S.top)return;
+	e = *(S.top - 1);
+	S.top--;
+}
+
+void clear(sqstack& S) {//清空栈
+	elemtype e;
+	if (S.top == S.base)return;
+	pop(S, e);
+	clear(S);
+}
+
+int stacklen(sqstack S) {//得出栈的长度
+	return(S.top - S.base);
+}
+
+bool stackempty(sqstack S) {//判断栈是否为空，空为真
+	if ((S.top - S.base)==0)return true;
+	else return false;
+}
+void destory(sqstack& S) {//销毁栈
+	if (S.base!=nullptr) {
+		delete[]S.base;
+		S.base = nullptr;
+		S.top = nullptr;
+		S.stacksize = 0;
+	}
+}
+
+void traver_print(sqstack S) {//遍历并输出整个栈
+	elemtype a; int l = stacklen(S);
+	for (int i = 0; i < l; i++) {
+		pop(S, a);
+		cout << a;
+	}
+}
+
+void transform(int num) {//十进制转化为八进制（元素必须是0~9的整数）
+	if (!num)return;
+	sqstack Q;
+	initstack(Q);
+	int p;
+	while (num>0) {
+		push(Q, num % 8);
+		num = num / 8;
+	}
+	traver_print(Q);
+	destory(Q);	
+}
+</pre>
+
+<p>主文件Stack.cpp 编码如下:</p>
+<pre class="code-box">十进制转化为八进制
+#include"sqstack.h"
+
+int main(){
+	cout << "请输入一个整数：";
+	int num; cin >> num;
+	cout << "他的八进制为：";
+	transform(num);
+	return 0;
+}
+</pre>
+
+<h2>三、 运行分析总结</h2>
+<h3>1、运行结果示例</h3>
+<p>输出结果为:</p>
+<pre class="code-box">
+请输入一个整数：65163
+他的八进制为：177213
+</pre>
+</pre>
+<h3>2､ 操作复杂度总结</h3>
+<p>在此处进行时间复杂度分析,设线性表长度为 n ,各操作复杂度见下表</p>
+<table>
+  <thead>
+    <tr>
+      <th>操作(函数名)</th>
+      <th>时间复杂度</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>initstack(sqstack& S)</td>
+      <td>O (1)</td>
+      <td>初始化栈</td>
+    </tr>
+    <tr>
+      <td>gettop(sqstack S,elemtype& e)</td>
+      <td>O (1)</td>
+      <td>取栈顶元素</td>
+    </tr>
+    <tr>
+      <td>push(sqstack& S, elemtype e)</td>
+      <td>O (n)</td>
+      <td>入栈</td>
+    </tr>
+    <tr>
+      <td>pop(sqstack& S, elemtype& e)</td>
+      <td>O (1)</td>
+      <td>出栈</td>
+    </tr>
+    <tr>
+      <td>clear(sqstack& S)</td>
+      <td>O ( n )</td>
+      <td>清空栈</td>
+    </tr>
+    <tr>
+      <td>stacklen(sqstack S)</td>
+      <td>O ( 1 )</td>
+      <td>求栈长度</td>
+    </tr>
+    <tr>
+      <td>stackempty(sqstack S)</td>
+      <td>O ( 1 )</td>
+      <td>判断栈是否为空</td>
+    </tr>
+    <tr>
+      <td>destory(sqstack& S)</td>
+      <td>O ( 1 )</td>
+      <td>销毁栈</td>
+    </tr>
+    <tr>
+      <td>traver_print(sqstack S)</td>
+      <td>O ( n )</td>
+      <td>遍历并输出整个栈</td>
+    </tr>
+    <tr>
+      <td>transform(int num)</td>
+      <td>O ( log₈(n) )</td>
+      <td>十进制转化为八进制</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>循环队列实验报告书</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+@page {
+  size: A4;
+  margin:22mm 18mm 22mm 18mm;
+}
+*{box-sizing:
+	border-box;
+	margin:0;
+	padding:0;}
+body{
+  font-family:"SimSun","宋体",serif;
+  font-size:10.5pt;
+  line-height:1.55;
+  width:210mm;
+  min-height:297mm;
+  margin:0 auto;
+  background:#ffffff;
+}
+.container{
+  width:100%;
+}
+.header-top{
+  text-align:center;
+  font-size:28pt;
+  margin-bottom:36pt;
+}
+h1.report-title{
+  text-align:center;
+  font-size:26pt;
+  font-family:'KaiTi';
+  font-weight:bold;
+  margin:14pt 0 18pt 0;
+}
+.header-info-table{
+  margin:0 0 20pt 0;
+  /* 信息项左对齐，实现冒号对齐效果 */
+  display:grid;
+  grid-template-columns: auto 1fr;
+  gap:8pt 8pt;
+  max-width:70mm;
+  margin-left:auto;
+  margin-right:auto;
+}
+.header-info-table .label{
+  text-align:right;
+}
+.header-info-table >div:nth-child(2n) {
+	border-bottom:0.5pt solid #000;
+	padding-bottom:2pt;
+}
+/* ================================= */
+
+h2{
+  font-size:11pt;
+  font-weight:bold;
+  margin:14pt 0 6pt 0;
+  text-align:left;
+}
+h3{
+  font-size:10.5pt;
+  font-weight:bold;
+  margin:11pt 0 4pt 0;
+}
+p{
+  margin:4pt 0;
+  text-indent:0em;
+}
+pre.code-box{
+  font-family:"Courier New",monospace;
+  font-size:8.2pt;
+  border:1px solid #777777;
+  padding:8pt 10pt;
+  background:#ffffff;
+  white-space:pre;
+  overflow-x:auto;
+  margin:7pt 0;
+}
+.math-center{
+  text-align:center;
+  margin:8pt 0;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:10pt 0;
+}
+table th, table td{
+  border:1px solid #000;
+  padding:5pt 7pt;
+  font-size:9pt;
+}
+table th{
+  background:#f8f8f8;
+}
+@media print{
+  body{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header-top">
+  <p style="font-size:36pt;font-family:'LiSu'">
+	 <br>
+  </p>
+  <p style="font-size:36pt;font-family:'LiSu'">河海大学 数学院</p>
+  </div>
+  <div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  </div>
+  <div class="header-top">
+  <p style="font-size:28pt;font-family:'KaiTi';font-weight:bold">《数据结构与算法》课程</p>
+  </div>
+</div>
+<h1 class="report-title">循环队列的实现与应用实验报告书</h1>
+  <p>
+	 <br>
+  </p>
+  <p>
+	 <br>
+  </p>
+  <p>
+	 <br>
+  </p>
+<div class="header-info-table">
+  <div class="label">专  业：</div>
+  <div>信息与计算科学</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+</div>
+<div class="header-info-table">	
+  <div class="label">姓  名：</div>
+  <div>邸常伟</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+</div>
+<div class="header-info-table">
+  <div class="label">学  号：</div>
+  <div>2426010214</div>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+    <p>
+	 <br>
+  </p>
+    <p>
+	 <br>
+  </p>
+    <p>
+	 <br>
+  </p>
+</div>
+<div style="text-align:center;font-size:18pt;margin-bottom:36pt;">
+    <p>二〇二六年 十月</p>
+    <span class="label"> </span>
+</div>
+<div style="text-align:center;font: size 10pt;font-family:'LiSu'">
+  <p>
+	 <br>
+  </p>
+   <p>
+	 <br>
+  </p>
+   <p>
+	 <br>
+  </p>
+</div>
+<!-- ================================= -->
+
+<h2>循环队列实验报告</h2>
+
+<h2>实验目的</h2>
+<p>(1)掌握并实现循环队列的基本操作。</p>
+<p>(2)加深对循环队列的理解，逐步培养解决实际问题的编程能力。</p>
+<p>(3)基于队列解决实际问题（输出杨辉三角）。</p>
+
+<h2>实验内容</h2>
+<p>1､基于如下的循环队列类型定义：
+
+typedef struct{
+
+    ElemType *base; //基地址
+
+    int front;  //头指针
+
+    int rear;  //尾指针
+
+    int queuesize;
+
+}Queue
+
+实现循环队列的基本操作函数：初始化队列InitQueue、销毁队列DestroyQueue、队列空判断QueueEmpty、队列长度QueueLength、取队列头GetHead、清空队列ClearQueue、入队列EnQueue、出队列DeQueue、遍历队列QueuePrint基本操作。</p>
+<p>2､调用上述函数实现下列操作:</p>
+<p>(1)初始化队列;</p>
+<p>(2)调用入队列函数;</p>
+<p>(3)调用出队列函数；</p>
+<p>(4)遍历并输出队列；</p>
+<p>(5)销毁队列；</p>
+<!-- <p>(6)遍历并输出线性表;</p> -->
+<p>3､基于队列基本操作，实现杨辉三角输出。</p>
+
+<h2>1､ 基本操作实现函数代码:</h2>
+<p>头文件round-robin_queue.h 编码如下:</p>
+<pre class="code-box">
+#include &lt;iostream&gt;
+#define elemtype int
+#define maxsize 100
+using namespace std;
+
+typedef struct roundqueue {
+	int front;
+	int rear;
+	elemtype* base;
+	int queuesize;
+};
+
+void initqueue(roundqueue& S) {//初始化
+	S.base = new elemtype[maxsize];
+	if (!S.base)return;
+	S.queuesize = maxsize;
+	S.front = S.rear = 0;
+}
+
+void enqueue(roundqueue& S, elemtype e) {//插入元素e
+	if ((S.rear + 1) % S.queuesize == S.front)
+	{
+		return;
+	}
+	S.base[S.rear] = e;
+	S.rear = (S.rear + 1) % S.queuesize;
+}
+
+void dequeue(roundqueue& S, elemtype& e) {//删除元素
+	if (S.rear == S.front)
+	{
+		return;
+	}
+	e = S.base[S.front];
+	S.front = (S.front + 1) % S.queuesize;
+}
+
+elemtype getelem(roundqueue S) {//取出队首元素
+	return(S.base[S.front]);
+}
+
+int queuelen(roundqueue S) {//求队列长
+	return((S.rear - S.front + S.queuesize) % S.queuesize);
+}
+
+void destroyqueue(roundqueue& S) {//销毁队列
+	delete[]S.base;
+	S.base = nullptr;
+	S.front = S.rear = 0;
+	S.queuesize = 0;
+}
+
+// 遍历打印，不破坏队列，过滤0
+void travelqueue(roundqueue& S, int lineWidth) {
+	int len = queuelen(S);
+	elemtype e;
+	for (int k = 0; k < lineWidth; k++) {
+		cout << "  ";
+	}
+	for (int i = 0; i < len; i++) {
+		dequeue(S, e);
+		if (e != 0) {
+			printf("%4d", e);
+		}
+		enqueue(S, e);
+	}
+	cout << endl;
+}
+// 根据当前队列，生成下一行
+void pascal_tri(roundqueue& S) {
+	elemtype e = 0; elemtype r;
+	int len = queuelen(S);
+	for (int i = 0; i < len; i++) {
+		dequeue(S, r); enqueue(S, e + r);
+		e = r;
+	}
+	enqueue(S, 0);
+}
+</pre>
+
+<p>主文件circularqueue.cpp 编码如下:</p>
+<pre class="code-box">杨辉三角计算输出操作
+#include"round-robin_queue.h"
+
+int main() {
+	roundqueue S;
+	initqueue(S);
+	int n;
+	cout << "请输入行数：";
+	cin >> n;
+	cout << '\n';
+	enqueue(S, 0);
+	enqueue(S, 1);
+	enqueue(S, 0);
+	for (int i = 0; i < n; i++) {
+		travelqueue(S,n-i);
+		pascal_tri(S);
+	}
+	destroyqueue(S);
+	return 0;
+}
+
+</pre>
+
+<h2>三、 运行分析总结</h2>
+<h3>1、运行结果示例</h3>
+<p>输出结果为:</p>
+<pre class="code-box">第一次测试：
+	请输入行数：10
+
+                       1
+                     1   1
+                   1   2   1
+                 1   3   3   1
+               1   4   6   4   1
+             1   5  10  10   5   1
+           1   6  15  20  15   6   1
+         1   7  21  35  35  21   7   1
+       1   8  28  56  70  56  28   8   1
+     1   9  36  84 126 126  84  36   9   1
+</pre>
+<pre class="code-box">第二次测试：
+	请输入行数：11
+
+                         1
+                       1   1
+                     1   2   1
+                   1   3   3   1
+                 1   4   6   4   1
+               1   5  10  10   5   1
+             1   6  15  20  15   6   1
+           1   7  21  35  35  21   7   1
+         1   8  28  56  70  56  28   8   1
+       1   9  36  84 126 126  84  36   9   1
+     1  10  45 120 210 252 210 120  45  10   1
+</pre>
+<pre class="code-box">第三次测试：
+	请输入行数：13
+
+                             1
+                           1   1
+                         1   2   1
+                       1   3   3   1
+                     1   4   6   4   1
+                   1   5  10  10   5   1
+                 1   6  15  20  15   6   1
+               1   7  21  35  35  21   7   1
+             1   8  28  56  70  56  28   8   1
+           1   9  36  84 126 126  84  36   9   1
+         1  10  45 120 210 252 210 120  45  10   1
+       1  11  55 165 330 462 462 330 165  55  11   1
+     1  12  66 220 495 792 924 792 495 220  66  12   1
+</pre>
+</pre>
+<h3>2､ 操作复杂度总结</h3>
+<p>在此处进行时间复杂度分析,设线性表长度为 n ,各操作复杂度见下表</p>
+<table>
+  <thead>
+    <tr>
+      <th>操作(函数名)</th>
+      <th>时间复杂度</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>void initqueue(roundqueue& S)</td>
+      <td>O (1)</td>
+      <td>初始化队列</td>
+    </tr>
+    <tr>
+      <td>void enqueue(roundqueue& S, elemtype e)</td>
+      <td>O (1)</td>
+      <td>入队</td>
+    </tr>
+    <tr>
+      <td>void dequeue(roundqueue& S, elemtype& e)</td>
+      <td>O (1)</td>
+      <td>出队</td>
+    </tr>
+    <tr>
+      <td>elemtype getelem(roundqueue S)</td>
+      <td>O (1)</td>
+      <td>获取队首</td>
+    </tr>
+    <tr>
+      <td>int queuelen(roundqueue S)</td>
+      <td>O ( 1 )</td>
+      <td>求队列长度</td>
+    </tr>
+    <tr>
+      <td>void destroyqueue(roundqueue& S)</td>
+      <td>O ( 1 )</td>
+      <td>销毁队列</td>
+    </tr>
+    <tr>
+      <td>void travelqueue(roundqueue& S, int lineWidth)</td>
+      <td>O ( n )</td>
+      <td>遍历打印</td>
+    </tr>
+    <tr>
+      <td>void pascal_tri(roundqueue& S)</td>
+      <td>O ( n )</td>
+      <td>生成杨辉三角下一行</td>
+    </tr>
+    <!-- <tr>
+      <td>addlist(link& Lc, link La, link Lb)</td>
+      <td>O ( 4n² )</td>
+      <td>多项式相加</td>
+    </tr>
+    <tr>
+      <td>multilist(link& Lmul, link La, link Lb)</td>
+      <td>O ( n² )</td>
+      <td>多项式相乘</td>
+    </tr> -->
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>
